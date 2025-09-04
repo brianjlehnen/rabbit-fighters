@@ -1,0 +1,108 @@
+# Rabbit Fighters - Git Ignore File
+# This prevents sensitive and unnecessary files from being uploaded to GitHub
+
+# ============================================
+# SECURITY - NEVER COMMIT THESE
+# ============================================
+
+# Admin tools and converters (contain passwords)
+private/
+admin-converter.html
+*converter.html
+*admin*
+
+# Sensitive configuration files
+.env
+.env.local
+secrets/
+passwords.txt
+
+# ============================================  
+# DEVELOPMENT FILES - NOT NEEDED IN PRODUCTION
+# ============================================
+
+# Temporary development files
+tmp/
+temp/
+test/
+backup/
+old/
+
+# Development versions of pages
+*-dev.html
+*-test.html
+*-backup.html
+*-old.html
+
+# Source files (keep locally, not needed on site)
+*.psd
+*.sketch
+*.fig
+*.ai
+*.svg.bak
+
+# ============================================
+# SYSTEM FILES - CLUTTER
+# ============================================
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows system files
+desktop.ini
+$RECYCLE.BIN/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ============================================
+# BUILD AND DEPENDENCIES (if you add them later)
+# ============================================
+
+# Node.js (if you ever add build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+.next/
+
+# ============================================
+# LOGS AND CACHE
+# ============================================
+
+# Log files
+*.log
+logs/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# ============================================
+# PERSONAL NOTES AND DOCS (Optional)
+# ============================================
+
+# Keep deployment docs private
+deployment-notes.md
+passwords-and-access.md
+admin-urls.txt
+hosting-details.txt
+
+# Personal TODO files
+TODO.md
+NOTES.md
+*.todo

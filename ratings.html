@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabbit Fighters Podcast - Episode Ratings</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(80, 201, 195, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 75% 75%, rgba(255, 71, 87, 0.06) 0%, transparent 25%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(80, 201, 195, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 71, 87, 0.02) 0%, transparent 50%),
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgICAgPGZlVHVyYmVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjAzIi8+Cjwvc3ZnPg==');
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #50C9C3;
+            letter-spacing: 1px;
+            line-height: 0.9;
+            text-align: center;
+        }
+
+        .grade {
+            font-family: 'Bangers', cursive;
+            font-size: 1.4rem;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            transform: rotate(-2deg);
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .grade.grade-a { color: #50C9C3; background: rgba(80, 201, 195, 0.1); border-color: rgba(80, 201, 195, 0.3); }
+        .grade.grade-b { color: #FFD700; background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.3); }
+        .grade.grade-c { color: #FF8C00; background: rgba(255, 140, 0, 0.1); border-color: rgba(255, 140, 0, 0.3); }
+        .grade.grade-d { color: #FF4757; background: rgba(255, 71, 87, 0.1); border-color: rgba(255, 71, 87, 0.3); }
+
+        .platform-btn {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .platform-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #50C9C3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .platform-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Ratings Page Specific Styles */
+        .ratings-page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-to-home:hover {
+            color: #FF4757;
+        }
+
+        /* Search and Filter Section */
+        .filter-controls {
+            margin-bottom: 3rem;
+            padding: 1.5rem 2rem; 
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(30, 30, 30, 0.8));
+            border: 1px solid rgba(255, 71, 87, 0.2);
+            border-radius: 12px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-bar:focus {
+            border-color: #50C9C3;
+            box-shadow: 0 0 0 3px rgba(80, 201, 195, 0.3);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem; 
+            margin-top: 1.5rem;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            appearance: none; 
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            background-size: 1.5em;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .filter-select:focus {
+            border-color: #FF4757;
+            box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.3);
+        }
+
+        .filter-select option {
+            background: #1a1a1a; 
+            color: #fff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: #50C9C3;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(90deg, #50C9C3, #FF4757);
+            border-color: #FF4757;
+            color: #fff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+
+        /* REMOVED: .episodes-horizontal-scroller wrapper and its styles */
+
+        /* UPDATED: Episodes Grid for Vertical Stack of Wide Rows */
+        .episodes-grid {
+            display: grid; /* Grid layout for vertical stacking of cards */
+            grid-template-columns: 1fr; /* One column, each card takes full width */
+            gap: 2.5rem; /* Vertical gap between cards */
+            padding: 0; /* No horizontal padding here */
+        }
+
+        /* UPDATED: Episode Rating Card for Horizontal Row Layout */
+        .episode-rating-card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(30, 30, 30, 0.8));
+            border: 1px solid rgba(255, 71, 87, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem 2rem; /* Adjusted padding for horizontal content */
+            backdrop-filter: blur(20px);
+            
+            /* NEW: Grid for internal elements (columns within the row) */
+            display: grid;
+            grid-template-columns: 100px 1fr minmax(180px, auto) minmax(80px, auto) minmax(120px, auto); /* Thumbnail | Info | Host Ratings | Overall | Link */
+            align-items: center; /* Vertically align content in the row */
+            gap: 20px; /* Gap between internal columns */
+            
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.02),
+                0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            width: 100%; /* Ensure card takes full width of its parent */
+            text-align: left; /* Default text alignment for content within row */
+        }
+
+        .episode-rating-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 15px 40px rgba(0, 0, 0, 0.5);
+            border-color: #50C9C3;
+        }
+
+        .card-thumbnail {
+            width: 90px; /* Smaller thumbnail for row layout */
+            height: 90px;
+            border-radius: 8px; /* Slightly smaller radius */
+            object-fit: cover;
+            margin-bottom: 0; /* Remove previous bottom margin */
+            border: 2px solid rgba(80, 201, 195, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            align-self: center; /* Vertically center in its grid cell */
+        }
+
+        .episode-rating-card:hover .card-thumbnail {
+            transform: scale(1.03);
+            border-color: #FF4757;
+        }
+
+        /* NEW: Wrapper for title and meta */
+        .card-info-summary {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* Align text to the left */
+        }
+
+        .card-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.6rem; /* Adjusted font size for row */
+            margin-bottom: 0.3rem; /* Tighter spacing */
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: 1px;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0; /* No bottom margin in this layout */
+        }
+
+        .host-ratings {
+            width: auto; /* Allow content to dictate width */
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            border-top: none;
+            /* UPDATED: Host ratings horizontal */
+            display: flex;
+            flex-direction: row; /* Horizontal layout for hosts */
+            justify-content: center; /* Center host ratings horizontally */
+            align-items: center; /* Align items vertically in row */
+            gap: 1rem; /* Space between each host rating */
+            text-align: center; /* Center content within host-ratings flex container */
+            flex-wrap: wrap; /* Allow host ratings to wrap if space is too tight */
+        }
+
+        .host-rating-item {
+            text-align: center; /* Center content within each host rating item */
+            flex: 1; /* Allow items to grow/shrink slightly to fill space */
+            min-width: 70px; /* Ensure a minimum width for each item */
+            white-space: nowrap; /* Keep host rating on one line if possible */
+        }
+
+        .host-rating-item .host-name {
+            font-size: 0.8rem; /* Smaller host name */
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .host-rating-item .grade {
+            font-size: 1.1rem; /* Smaller grade for individual hosts */
+            padding: 0.1rem 0.3rem; /* Smaller padding */
+        }
+
+        .overall-grade-section {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            border-top: none;
+            text-align: center; 
+        }
+
+        .overall-grade-section .grade {
+            font-size: 1.8rem; 
+            transform: rotate(-2deg); /* Re-add rotation for overall grade */
+            padding: 0.3rem 0.6rem;
+        }
+
+        .card-link-container {
+            margin-top: 0; 
+            width: auto; 
+            padding-top: 0;
+            border-top: none;
+            text-align: right; /* Align button to the right of its column */
+        }
+
+        .card-link-container .platform-btn {
+            width: auto; 
+            min-width: 120px; 
+            padding: 0.6rem 1rem; 
+            font-size: 0.85rem; 
+        }
+
+
+        /* Footer from index.html (ensure it's consistent) */
+        .footer-section {
+            text-align: center;
+            padding: 3.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem; 
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: #50C9C3;
+        }
+
+        .social-icon {
+            color: rgba(255, 255, 255, 0.7);
+            width: 24px;
+            height: 24px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .social-icon:hover {
+            color: #FF4757; 
+            transform: translateY(-2px);
+        }
+
+        .footer-divider {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .footer-text {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #FF4757, #50C9C3);
+            border-radius: 2px;
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            height: 8px; 
+            width: 8px; 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #50C9C3, #FF4757); 
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #FF4757, #50C9C3);
+        }
+
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 40px 20px;
+            }
+            .filter-controls {
+                padding: 1.2rem 1.5rem;
+            }
+            .episodes-grid {
+                padding: 0; 
+            }
+            .episode-rating-card {
+                /* On smaller screens, stack elements within card */
+                grid-template-columns: 100px 1fr; /* Thumbnail | Info */
+                gap: 15px;
+                padding: 1.2rem 1.5rem;
+            }
+            .card-thumbnail {
+                width: 80px;
+                height: 80px;
+            }
+            .card-info-summary {
+                align-items: flex-start;
+            }
+            .card-title {
+                font-size: 1.4rem;
+            }
+            .host-ratings,
+            .overall-grade-section,
+            .card-link-container {
+                grid-column: span 2; /* Make these span both columns (below info) */
+                text-align: center;
+                margin-top: 0.8rem;
+            }
+            .host-ratings {
+                flex-direction: row; /* Keep hosts in a row if space allows */
+                justify-content: center;
+                flex-wrap: wrap; /* Allow wrapping */
+            }
+            .host-rating-item {
+                text-align: center;
+                flex: none;
+                white-space: normal;
+                min-width: 60px; /* Smallest individual host rating */
+            }
+            .overall-grade-section .grade {
+                font-size: 1.6rem;
+            }
+            .card-link-container .platform-btn {
+                width: 100%;
+                min-width: unset;
+                flex-grow: 1;
+            }
+            .footer-section {
+                padding: 3rem 0;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 15px;
+            }
+            .ratings-page-header {
+                margin-bottom: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .filter-controls {
+                padding: 1rem;
+                margin-bottom: 2rem;
+            }
+            .search-bar {
+                margin-bottom: 1rem;
+            }
+            .filters-grid {
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+            .filter-select {
+                padding: 0.8rem 1rem; 
+            }
+            .filter-buttons {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .episode-rating-card {
+                padding: 1rem;
+                grid-template-columns: 60px 1fr; /* Smaller thumb on tiny screens */
+            }
+            .card-thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .card-meta {
+                font-size: 0.8rem;
+            }
+            .host-rating-item .grade {
+                font-size: 1rem;
+            }
+            .overall-grade-section .grade {
+                font-size: 1.4rem;
+            }
+            .footer-section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    
+    <div class="container">
+        <div class="ratings-page-header">
+            <a href="index.html" class="back-to-home">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/>
+                </svg>
+                Back to Home
+            </a>
+            <h1 class="section-title">Episode Ratings</h1>
+        </div>
+
+        <div class="filter-controls">
+            <input type="text" id="search-input" class="search-bar" placeholder="Search episodes by title, description, or guest..." />
+
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="grade-filter">Filter by Grade:</label>
+                    <div class="filter-buttons" id="grade-filters">
+                        <button class="filter-btn active" data-filter-value="all">All</button>
+                        <button class="filter-btn" data-filter-value="A">A</button>
+                        <button class="filter-btn" data-filter-value="B">B</button>
+                        <button class="filter-btn" data-filter-value="C">C</button>
+                        <button class="filter-btn" data-filter-value="D">D</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label for="genre-filter">Filter by Genre:</label>
+                    <select id="genre-filter" class="filter-select">
+                        <option value="all">All Genres</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Thriller">Thriller</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="type-filter">Filter by Type:</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="Movie">Movie</option>
+                        <option value="TV Show">TV Show</option>
+                        <option value="Music Album">Music Album</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="guest-filter">Filter by Guest:</label>
+                    <select id="guest-filter" class="filter-select">
+                        <option value="all">All Guests</option>
+                        <option value="None">None</option>
+                        <option value="Sarah Johnson">Sarah Johnson</option>
+                        <option value="Mike Davis">Mike Davis</option>
+                        <option value="Emily White">Emily White</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="episodes-grid" id="episodes-container">
+            <div class="episode-rating-card" data-grade="B+" data-genre="Sci-Fi" data-type="Movie" data-guest="None">
+                <img src="https://via.placeholder.com/150/FF4757/FFFFFF?text=EP+43" alt="Episode 43 Thumbnail" class="card-thumbnail" />
+                <div class="card-info-summary">
+                    <h3 class="card-title">Real Genius</h3>
+                    <p class="card-meta">Ep. 43 • June 12, 2025 • 56 min</p>
+                </div>
+                
+                <div class="host-ratings">
+                    <div class="host-rating-item">
+                        <div class="host-name">Joshua</div>
+                        <span class="grade grade-b">B</span>
+                    </div>
+                    <div class="host-rating-item">
+                        <div class="host-name">Greg</div>
+                        <span class="grade grade-a">A-</span>
+                    </div>
+                    <div class="host-rating-item">
+                        <div class="host-name">Brian</div>
+                        <span class="grade grade-b">B+</span>
+                    </div>
+                </div>
+
+                <div class="overall-grade-section">
+                    <span class="grade grade-b">Overall: B+</span>
+                </div>
+
+                <div class="card-link-container">
+                    <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-btn">
+                        <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                        </svg>
+                        Listen on Spotify
+                    </a>
+                </div>
+            </div>
+
+            <div class="episode-rating-card" data-grade="B" data-genre="Adventure" data-type="Movie" data-guest="None">
+                <img src="https://via.placeholder.com/150/50C9C3/FFFFFF?text=EP+42" alt="Episode 42 Thumbnail" class="card-thumbnail" />
+                <div class="card-info-summary">
+                    <h3 class="card-title">Indiana Jones & The Dial of Destiny</h3>
+                    <p class="card-meta">Ep. 42 • May 6, 2025 • 59 min</p>
+                </div>
+                
+                <div class="host-ratings">
+                    <div class="host-rating-item">
+                        <div class="host-name">Joshua</div>
+                        <span class="grade grade-c">C</span>
+                    </div>
+                    <div class="host-rating-item">
+                        <div class="host-name">Greg</div>
+                        <span class="grade grade-b">B</span>
+                    </div>
+                    <div class="host-rating-item">
+                        <div class="host-name">Brian</div>
+                        <span class="grade grade-b">B+</span>
+                    </div>
+                </div>
+
+                <div class="overall-grade-section">
+                    <span class="grade grade-b">Overall: B</span>
+                </div>
+
+                <div class="card-link-container">
+                    <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-btn">
+                        <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Listen on Spotify
+                        </a>
+                    </div>
+                </div>
+
+                <div class="episode-rating-card" data-grade="C+" data-genre="Fantasy" data-type="Movie" data-guest="Sarah Johnson">
+                    <img src="https://via.placeholder.com/150/FF8C00/FFFFFF?text=EP+41" alt="Episode 41 Thumbnail" class="card-thumbnail" />
+                    <div class="card-info-summary">
+                        <h3 class="card-title">The Adventures of Baron Munchausen</h3>
+                        <p class="card-meta">Ep. 41 • Apr 22, 2025 • 57 min</p>
+                    </div>
+                    
+                    <div class="host-ratings">
+                        <div class="host-rating-item">
+                            <div class="host-name">Joshua</div>
+                            <span class="grade grade-d">D</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Greg</div>
+                            <span class="grade grade-c">C+</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Brian</div>
+                            <span class="grade grade-c">C</span>
+                        </div>
+                    </div>
+
+                    <div class="overall-grade-section">
+                        <span class="grade grade-c">Overall: C+</span>
+                    </div>
+
+                    <div class="card-link-container">
+                        <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-btn">
+                            <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Listen on Spotify
+                        </a>
+                    </div>
+                </div>
+
+                <div class="episode-rating-card" data-grade="C" data-genre="Drama" data-type="Movie" data-guest="None">
+                    <img src="https://via.placeholder.com/150/FF4757/FFFFFF?text=EP+40" alt="Episode 40 Thumbnail" class="card-thumbnail" />
+                    <div class="card-info-summary">
+                        <h3 class="card-title">The Outsiders</h3>
+                        <p class="card-meta">Ep. 40 • Apr 11, 2025 • 52 min</p>
+                    </div>
+                    
+                    <div class="host-ratings">
+                        <div class="host-rating-item">
+                            <div class="host-name">Joshua</div>
+                            <span class="grade grade-c">C</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Greg</div>
+                            <span class="grade grade-c">C</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Brian</div>
+                            <span class="grade grade-b">B-</span>
+                        </div>
+                    </div>
+
+                    <div class="overall-grade-section">
+                        <span class="grade grade-c">Overall: C</span>
+                    </div>
+
+                    <div class="card-link-container">
+                        <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-btn">
+                            <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Listen on Spotify
+                        </a>
+                    </div>
+                </div>
+
+                <div class="episode-rating-card" data-grade="A-" data-genre="Drama" data-type="Movie" data-guest="Mike Davis">
+                    <img src="https://via.placeholder.com/150/50C9C3/FFFFFF?text=EP+39" alt="Episode 39 Thumbnail" class="card-thumbnail" />
+                    <div class="card-info-summary">
+                        <h3 class="card-title">Thelma and Louise</h3>
+                        <p class="card-meta">Ep. 39 • Feb 4, 2025 • 1 hr 1 min</p>
+                    </div>
+                    
+                    <div class="host-ratings">
+                        <div class="host-rating-item">
+                            <div class="host-name">Joshua</div>
+                            <span class="grade grade-a">A</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Greg</div>
+                            <span class="grade grade-a">A-</span>
+                        </div>
+                        <div class="host-rating-item">
+                            <div class="host-name">Brian</div>
+                            <span class="grade grade-a">A-</span>
+                        </div>
+                    </div>
+
+                    <div class="overall-grade-section">
+                        <span class="grade grade-a">Overall: A-</span>
+                    </div>
+
+                    <div class="card-link-container">
+                        <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-btn">
+                            <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Listen on Spotify
+                        </a>
+                    </div>
+                </div>
+                
+                </div>
+        </div>
+
+    <div class="footer-section">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <span class="footer-divider">•</span>
+                <a href="mailto:callus@rabbitfighters.com" class="footer-link">Contact</a>
+                <span class="footer-divider">•</span>
+                <a href="https://steelydan.store/" class="footer-link">Merch</a>
+                <span class="footer-divider">•</span>
+                <a href="https://tinyurl.com/rabbitfighters" target="_blank" class="footer-link">Playlist</a>
+                
+                <span class="footer-divider">•</span>
+                <a href="https://twitter.com/rabbitfighters" target="_blank" aria-label="Twitter">
+                    <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.46 6c-.77.34-1.6.57-2.46.69.88-.53 1.56-1.37 1.88-2.38-.82.49-1.74.85-2.72 1.05C18.37 4.5 17.26 4 16.03 4c-2.35 0-4.27 1.9-4.27 4.24 0 .33.04.65.12.95-3.55-.18-6.7-1.89-8.81-4.48-.37.6-.58 1.3-.58 2.05 0 1.47.74 2.76 1.88 3.52-.69-.02-1.34-.2-1.91-.53v.05c0 2.05 1.46 3.76 3.39 4.14-.36.1-.73.16-1.12.16-.27 0-.53-.03-.79-.08.54 1.67 2.1 2.91 3.96 2.94-1.4 1.09-3.17 1.74-5.09 1.74-.33 0-.66-.02-.98-.06C3.96 20.35 6.05 21 8.35 21c7.04 0 10.89-5.78 10.89-10.85 0-.16-.01-.32-.01-.48.75-.54 1.4-1.22 1.93-1.99z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/rabbitfighters" target="_blank" aria-label="Instagram">
+                    <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7.8 2h8.4C18.9 2 22 5.1 22 8.6v6.8c0 3.5-3.1 6.6-6.8 6.6H7.8C4.3 22 2 19.4 2 15.4V8.6C2 5.1 5.1 2 7.8 2zm-.2 2.6c-2.3 0-3.3 1-3.3 3.3v6.8c0 2.3 1 3.3 3.3 3.3h8.4c2.3 0 3.3-1 3.3-3.3V7.9c0-2.3-1-3.3-3.3-3.3H7.6zM12 7c-2.7 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.3c-1.8 0-3.3-1.5-3.3-3.3s1.5-3.3 3.3-3.3 3.3 1.5 3.3 3.3-1.5 3.3-3.3 3.3zm5.7-9.5c.6 0 1.1-.5 1.1-1.1s-.5-1.1-1.1-1.1-1.1.5-1.1 1.1.5 1.1 1.1 1.1z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="footer-text">A Sneaky Alive Production</div>
+            <div class="footer-tagline">"Isn't he dead?"</div>
+        </div>
+    </div>
+    
+    <script>
+        function openSpotifyEpisode(url) {
+            window.open(url, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const episodesContainer = document.getElementById('episodes-container');
+            const episodeCards = Array.from(episodesContainer.children); // Convert HTMLCollection to Array
+            const searchInput = document.getElementById('search-input');
+            const gradeFilters = document.getElementById('grade-filters');
+            const genreFilter = document.getElementById('genre-filter');
+            const typeFilter = document.getElementById('type-filter');
+            const guestFilter = document.getElementById('guest-filter');
+
+            function applyFilters() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedGrade = gradeFilters.querySelector('.filter-btn.active')?.dataset.filterValue || 'all';
+                const selectedGenre = genreFilter.value;
+                const selectedType = typeFilter.value;
+                const selectedGuest = guestFilter.value;
+
+                episodeCards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const meta = card.querySelector('.card-meta').textContent.toLowerCase();
+                    
+                    const cardGrade = card.dataset.grade?.replace('+', '').replace('-', '') || ''; 
+                    const cardGenre = card.dataset.genre?.toLowerCase() || '';
+                    const cardType = card.dataset.type?.toLowerCase() || '';
+                    const cardGuest = card.dataset.guest?.toLowerCase() || '';
+
+                    const matchesSearch = title.includes(searchTerm) || meta.includes(searchTerm) || cardGuest.includes(searchTerm);
+
+                    const matchesGrade = selectedGrade === 'all' || (cardGrade && cardGrade.startsWith(selectedGrade.toLowerCase()));
+                    const matchesGenre = selectedGenre === 'all' || cardGenre.includes(selectedGenre.toLowerCase());
+                    const matchesType = selectedType === 'all' || cardType.includes(selectedType.toLowerCase());
+                    const matchesGuest = selectedGuest === 'all' || cardGuest.includes(selectedGuest.toLowerCase());
+
+                    if (matchesSearch && matchesGrade && matchesGenre && matchesType && matchesGuest) {
+                        card.style.display = 'grid'; // Display as grid if matching
+                    } else {
+                        card.style.display = 'none'; 
+                    }
+                });
+            }
+
+            // Event Listeners for Filters
+            searchInput.addEventListener('keyup', applyFilters);
+
+            gradeFilters.addEventListener('click', function(event) {
+                if (event.target.classList.contains('filter-btn')) {
+                    gradeFilters.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    event.target.classList.add('active');
+                    applyFilters();
+                }
+            });
+
+            genreFilter.addEventListener('change', applyFilters);
+            typeFilter.addEventListener('change', applyFilters);
+            guestFilter.addEventListener('change', applyFilters);
+
+            applyFilters();
+        });
+    </script>
+</body>
+</html>
