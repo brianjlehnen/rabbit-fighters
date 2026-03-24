@@ -358,16 +358,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.3rem;
         }
 
-        .card-host-grade .host-label {
-            color: var(--text-dim);
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .card-host-grade .host-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
+
+        .card-host-grade .host-avatar.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 1.5px solid var(--grade-a-border); }
+        .card-host-grade .host-avatar.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 1.5px solid var(--grade-b-border); }
+        .card-host-grade .host-avatar.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 1.5px solid var(--grade-d-border); }
 
         .card-host-grade .grade {
             font-size: 1.25rem;
@@ -626,10 +634,11 @@
     const resultsInfo = document.getElementById('results-info');
     const noResults = document.getElementById('no-results');
 
-    function hostGradeBadge(label, grade) {
+    function hostGradeBadge(name, initial, grade) {
         if (!grade) return '';
+        const avatarClass = `avatar-${name.toLowerCase()}`;
         return `<div class="card-host-grade">
-            <span class="host-label">${label}</span>
+            <span class="host-avatar ${avatarClass}">${initial}</span>
             <span class="grade grade-sm grade-${gc(grade)}">${grade}</span>
         </div>`;
     }
@@ -645,9 +654,9 @@
             if (ep.genre) metaParts.push(ep.genre.split(',')[0].trim());
 
             const hostGrades = [
-                hostGradeBadge('Joshua', ep.jrGrade),
-                hostGradeBadge('Greg', ep.gregGrade),
-                hostGradeBadge('Brian', ep.brianGrade),
+                hostGradeBadge('Joshua', 'J', ep.jrGrade),
+                hostGradeBadge('Greg', 'G', ep.gregGrade),
+                hostGradeBadge('Brian', 'B', ep.brianGrade),
             ].filter(Boolean).join('');
 
             const epUrl = ep.spotifyUrl || SPOTIFY_URL;
