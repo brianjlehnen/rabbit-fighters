@@ -27,145 +27,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --bg: #1a1714;
-            --bg-surface: #242019;
-            --bg-elevated: #2e2a23;
-            --text: #e8e0d4;
-            --text-muted: #a89f91;
-            --text-dim: #6b6358;
-            --accent-teal: #50C9C3;
-            --accent-red: #E8453C;
-            --grade-gold: #D4A843;
-            --border: rgba(168, 159, 145, 0.12);
-            --border-hover: rgba(168, 159, 145, 0.25);
-
-            /* Grade colors (for overall grades, stats, distribution) */
-            --grade-a-bg: rgba(80, 201, 195, 0.15);
-            --grade-a-border: rgba(80, 201, 195, 0.4);
-            --grade-a-text: #50C9C3;
-            --grade-b-bg: rgba(212, 168, 67, 0.15);
-            --grade-b-border: rgba(212, 168, 67, 0.4);
-            --grade-b-text: #D4A843;
-            --grade-c-bg: rgba(210, 130, 50, 0.15);
-            --grade-c-border: rgba(210, 130, 50, 0.4);
-            --grade-c-text: #d28232;
-            --grade-d-bg: rgba(232, 69, 60, 0.15);
-            --grade-d-border: rgba(232, 69, 60, 0.4);
-            --grade-d-text: #E8453C;
-
-            /* Host colors (for individual host grade badges) */
-            --host-brian: #7BA68C;
-            --host-brian-bg: rgba(123, 166, 140, 0.15);
-            --host-brian-border: rgba(123, 166, 140, 0.4);
-            --host-joshua: #C4973B;
-            --host-joshua-bg: rgba(196, 151, 59, 0.15);
-            --host-joshua-border: rgba(196, 151, 59, 0.4);
-            --host-greg: #C46B5C;
-            --host-greg-bg: rgba(196, 107, 92, 0.15);
-            --host-greg-border: rgba(196, 107, 92, 0.4);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ---- Grain Texture ---- */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjA4Ii8+PC9zdmc+');
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.5;
-        }
-
-        /* ---- Scrollbar ---- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-        /* ---- Nav ---- */
-        .site-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(26, 23, 20, 0.92);
-            border-bottom: 1px solid var(--border);
-            padding: 0.8rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text);
-            flex-shrink: 0;
-        }
-
-        .nav-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            object-fit: contain;
-        }
-
-        .nav-title {
-            font-family: 'Bangers', cursive;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-            color: var(--text);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.4rem 0.7rem;
-            border-radius: 6px;
-            transition: color 0.2s, background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--bg-elevated);
-        }
-
-        .nav-link svg { width: 16px; height: 16px; }
-
         /* ---- Hero ---- */
         .hero {
             text-align: center;
-            padding: 6rem 2rem 4rem;
+            padding: 4rem 2rem 2rem;
             position: relative;
         }
 
@@ -181,37 +48,92 @@
             pointer-events: none;
         }
 
+        .hero-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         .hero-logo {
-            width: 140px;
-            height: 140px;
+            width: 90px;
+            height: 90px;
             border-radius: 12px;
             object-fit: contain;
-            margin-bottom: 2rem;
             filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
             transform: rotate(-2deg);
             transition: transform 0.4s ease;
+            flex-shrink: 0;
         }
 
-        .hero-logo:hover {
-            transform: rotate(0deg) scale(1.03);
+        .hero-logo:hover { transform: rotate(0deg) scale(1.03); }
+
+        .hero-text {
+            text-align: left;
         }
 
         .hero-title {
             font-family: 'Bangers', cursive;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
             letter-spacing: 3px;
             line-height: 0.9;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             color: var(--text);
         }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
+        .hero-tagline {
+            font-size: 0.95rem;
             color: var(--text-muted);
-            max-width: 480px;
-            margin: 0 auto 2.5rem;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.4;
+        }
+
+        /* Hero controversy callout */
+        .hero-callout {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin: 2rem auto;
+            max-width: 520px;
+            display: none;
+            align-items: center;
+            gap: 1.2rem;
+            text-align: left;
+        }
+
+        .hero-callout.visible { display: flex; }
+
+        .hero-callout-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-callout-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-callout-grades {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-callout-spread {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--accent-red);
+            line-height: 1;
+            flex-shrink: 0;
+            min-width: 50px;
+            text-align: center;
         }
 
         .hero-platforms {
@@ -219,6 +141,7 @@
             justify-content: center;
             gap: 0.6rem;
             flex-wrap: wrap;
+            margin-top: 1.5rem;
         }
 
         .platform-pill {
@@ -243,107 +166,48 @@
 
         .platform-pill svg { width: 16px; height: 16px; }
 
-        /* ---- Content Container ---- */
-        .content {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* ---- Section Headers ---- */
-        .section-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        /* ---- Grade Badges ---- */
-        .grade {
-            font-family: 'Bangers', cursive;
-            display: inline-block;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            line-height: 1;
-        }
-
-        .grade-sm {
-            font-size: 0.95rem;
-            padding: 0.2rem 0.45rem;
-        }
-
-        .grade-md {
-            font-size: 1.4rem;
-            padding: 0.25rem 0.55rem;
-        }
-
-        .grade-lg {
-            font-size: 2.2rem;
-            padding: 0.3rem 0.65rem;
-            transform: rotate(-2deg);
-        }
-
-        .grade-a { color: var(--grade-a-text); background: var(--grade-a-bg); border: 1px solid var(--grade-a-border); }
-        .grade-b { color: var(--grade-b-text); background: var(--grade-b-bg); border: 1px solid var(--grade-b-border); }
-        .grade-c { color: var(--grade-c-text); background: var(--grade-c-bg); border: 1px solid var(--grade-c-border); }
-        .grade-d { color: var(--grade-d-text); background: var(--grade-d-bg); border: 1px solid var(--grade-d-border); }
-
-        /* Host-colored grade badges */
-        .grade-host-brian { color: var(--host-brian); background: var(--host-brian-bg); border: 1px solid var(--host-brian-border); }
-        .grade-host-joshua { color: var(--host-joshua); background: var(--host-joshua-bg); border: 1px solid var(--host-joshua-border); }
-        .grade-host-greg { color: var(--host-greg); background: var(--host-greg-bg); border: 1px solid var(--host-greg-border); }
-
         /* ---- Featured Episode ---- */
-        .featured {
-            padding: 4rem 0;
-        }
+        .featured { padding: 3rem 0; }
 
         .featured-card {
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 2.5rem;
+            overflow: hidden;
             position: relative;
         }
 
+        .featured-body {
+            padding: 2rem 2.5rem;
+        }
+
         .featured-eyebrow {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--accent-teal);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .featured-title {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
             line-height: 1.15;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
         .featured-meta {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            font-size: 0.8rem;
+            color: var(--text-dim);
             margin-bottom: 1.5rem;
         }
 
         .featured-grades {
             display: flex;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
@@ -355,7 +219,7 @@
         }
 
         .host-grade-name {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -365,53 +229,25 @@
         .featured-description {
             color: var(--text-muted);
             line-height: 1.7;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        .featured-description p {
-            margin-bottom: 0.8rem;
-        }
-
-        .featured-description strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .spotify-embed {
-            margin: 2rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid var(--accent-teal);
-            border-radius: 8px;
-            background: rgba(80, 201, 195, 0.08);
-            color: var(--accent-teal);
-            text-decoration: none;
-            font-weight: 600;
             font-size: 0.9rem;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            transition: all 0.25s ease;
+            margin-bottom: 1rem;
         }
 
-        .cta-btn:hover {
-            background: rgba(80, 201, 195, 0.15);
-            transform: translateY(-1px);
+        .featured-description p { margin-bottom: 0.6rem; }
+        .featured-description strong { color: var(--text); font-weight: 600; }
+
+        /* Spotify embed sits prominently at bottom of card */
+        .spotify-embed {
+            border-top: 1px solid var(--border);
+            background: rgba(0,0,0,0.2);
         }
 
-        .cta-btn svg { width: 18px; height: 18px; }
+        .spotify-embed iframe {
+            display: block;
+        }
 
         /* ---- Episode List ---- */
-        .episodes {
-            padding: 2rem 0 4rem;
-        }
+        .episodes { padding: 2rem 0 3rem; }
 
         .episode-item {
             display: grid;
@@ -426,75 +262,34 @@
             transition: all 0.2s ease;
         }
 
-        .episode-item:last-of-type {
-            border-bottom: none;
-        }
-
-        .episode-item:hover {
-            padding-left: 0.5rem;
-        }
-
-        .episode-item:hover .ep-title {
-            color: var(--accent-teal);
-        }
+        .episode-item:last-of-type { border-bottom: none; }
+        .episode-item:hover { padding-left: 0.5rem; }
+        .episode-item:hover .ep-title { color: var(--accent-teal); }
 
         .ep-thumb {
             width: 48px;
             height: 68px;
-            border-radius: 6px;
-            overflow: hidden;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .ep-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .ep-thumb .thumb-fallback .grade { font-size: 1.1rem; }
 
-        .ep-thumb-fallback {
-            font-family: 'Bangers', cursive;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 0.5px;
-        }
-
-        .ep-num {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-dim);
-            letter-spacing: 0.5px;
-        }
-
-        .ep-body {
-            min-width: 0;
-        }
+        .ep-body { min-width: 0; }
 
         .ep-title {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             transition: color 0.2s;
-            margin-bottom: 0.15rem;
+            margin-bottom: 0.1rem;
+            letter-spacing: -0.01em;
         }
 
         .ep-detail {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-dim);
             display: flex;
             align-items: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-        }
-
-        .ep-summary {
-            color: var(--text-muted);
-            font-style: italic;
         }
 
         .ep-grades {
@@ -510,67 +305,45 @@
             gap: 0.25rem;
         }
 
+        /* ---- By The Numbers (consolidated analytics) ---- */
+        .analytics { padding: 3rem 0 4rem; }
 
-        .view-all-link {
-            display: inline-flex;
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.4rem;
-            margin-top: 2rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.2s;
+            margin-bottom: 1.5rem;
         }
 
-        .view-all-link:hover {
-            color: var(--accent-red);
-        }
-
-        .view-all-link svg {
-            width: 14px;
-            height: 14px;
-            transition: transform 0.2s;
-        }
-
-        .view-all-link:hover svg {
-            transform: translateX(3px);
-        }
-
-        /* ---- Stats ---- */
-        .stats {
-            padding: 2rem 0 4rem;
-        }
-
+        /* Stats row */
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 2rem;
         }
 
         .stat-block {
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             text-align: center;
             transition: border-color 0.3s;
         }
 
-        .stat-block:hover {
-            border-color: var(--border-hover);
-        }
+        .stat-block:hover { border-color: var(--border-hover); }
 
         .stat-number {
             font-family: 'Bangers', cursive;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             line-height: 1;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             color: var(--grade-gold);
         }
 
         .stat-desc {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -578,21 +351,145 @@
         }
 
         .stat-detail {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 0.4rem;
+            margin-top: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .stat-detail a {
-            color: var(--accent-teal);
-            text-decoration: none;
+        /* Grade distribution — horizontal bars */
+        .grade-dist-rows {
+            margin-bottom: 2.5rem;
         }
 
-        .stat-detail a:hover {
-            text-decoration: underline;
+        .grade-dist-row {
+            display: grid;
+            grid-template-columns: 28px 1fr 28px;
+            gap: 0.6rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
         }
 
-        /* ---- Random Episode Button ---- */
+        .grade-dist-label {
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-align: right;
+        }
+
+        .grade-dist-bar-track {
+            height: 24px;
+            background: var(--bg-surface);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .grade-dist-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+            min-width: 2px;
+        }
+
+        .grade-dist-count {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        /* Two-column: host cards + controversial */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .analytics-col-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        /* Compact host cards for the grid */
+        .analytics-grid .host-stats-grid {
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .analytics-grid .host-stat-card {
+            padding: 1rem;
+        }
+
+        .analytics-grid .host-stat-header {
+            flex-direction: row;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .analytics-grid .host-stat-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 1rem;
+        }
+
+        .analytics-grid .host-stat-name {
+            font-size: 0.9rem;
+        }
+
+        .analytics-grid .host-stat-row {
+            font-size: 0.75rem;
+            padding: 0.3rem 0;
+        }
+
+        /* Disagreements */
+        .disagreement-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .disagreement-item:last-child { border-bottom: none; }
+
+        .disagreement-spread {
+            font-family: 'Bangers', cursive;
+            font-size: 1.3rem;
+            color: var(--accent-red);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .disagreement-body { flex: 1; min-width: 0; }
+
+        .disagreement-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+
+        .disagreement-grades {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+            flex-wrap: wrap;
+        }
+
+        .disagreement-host {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-dim);
+        }
+
+        /* ---- Random Episode ---- */
         .random-btn {
             display: inline-flex;
             align-items: center;
@@ -647,308 +544,40 @@
             flex-wrap: wrap;
         }
 
-        /* ---- Host Stats ---- */
-        .host-stats {
-            padding: 2rem 0 4rem;
-        }
-
-        .host-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-
-        .host-stat-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: border-color 0.3s;
-        }
-
-        .host-stat-card:hover { border-color: var(--border-hover); }
-
-        .host-stat-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .host-stat-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bangers', cursive;
-            font-size: 1.4rem;
-            letter-spacing: 0.5px;
-        }
-
-        .host-stat-avatar.avatar-brian { background: var(--host-brian-bg); color: var(--host-brian); border: 2px solid var(--host-brian-border); }
-        .host-stat-avatar.avatar-joshua { background: var(--host-joshua-bg); color: var(--host-joshua); border: 2px solid var(--host-joshua-border); }
-        .host-stat-avatar.avatar-greg { background: var(--host-greg-bg); color: var(--host-greg); border: 2px solid var(--host-greg-border); }
-
-        .host-stat-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .host-stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.4rem 0;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .host-stat-row + .host-stat-row {
-            border-top: 1px solid var(--border);
-        }
-
-        .host-stat-value {
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        /* ---- Grade Distribution ---- */
-        .grade-dist {
-            padding: 2rem 0 4rem;
-        }
-
-        .grade-bars {
-            display: flex;
-            gap: 0.6rem;
-            align-items: flex-end;
-            height: 140px;
-            padding-top: 1rem;
-        }
-
-        .grade-bar-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-            height: 100%;
-            justify-content: flex-end;
-        }
-
-        .grade-bar {
-            width: 100%;
-            max-width: 60px;
-            border-radius: 4px 4px 0 0;
-            transition: height 0.6s ease;
-            min-height: 4px;
-        }
-
-        .grade-bar-label {
-            font-family: 'Bangers', cursive;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .grade-bar-count {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            font-weight: 600;
-        }
-
-        /* ---- Disagreements ---- */
-        .disagreements {
-            padding: 2rem 0 4rem;
-        }
-
-        .disagreement-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1.8rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .disagreement-item:last-child { border-bottom: none; }
-
-        .disagreement-spread {
-            font-family: 'Bangers', cursive;
-            font-size: 1.4rem;
-            color: var(--accent-red);
-            min-width: 50px;
-            text-align: center;
-        }
-
-        .disagreement-body { flex: 1; min-width: 0; }
-
-        .disagreement-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .disagreement-grades {
-            display: flex;
-            gap: 0.75rem;
-            font-size: 0.85rem;
-            flex-wrap: wrap;
-        }
-
-        .disagreement-host {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: var(--text-dim);
-        }
-
-        /* ---- Footer ---- */
-        .site-footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .footer-link:hover { color: var(--accent-teal); }
-
-        .footer-dot {
-            color: var(--text-dim);
-            font-size: 0.6rem;
-        }
-
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-social a {
-            color: var(--text-dim);
-            transition: color 0.2s;
-        }
-
-        .footer-social a:hover { color: var(--accent-red); }
-        .footer-social svg { width: 20px; height: 20px; }
-
-        .footer-production {
-            font-family: 'Bangers', cursive;
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            margin-bottom: 0.3rem;
-        }
-
-        .footer-tagline {
-            font-style: italic;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-
-        /* ---- Animations ---- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Stagger children */
-        .stagger > .fade-in:nth-child(1) { transition-delay: 0s; }
-        .stagger > .fade-in:nth-child(2) { transition-delay: 0.08s; }
-        .stagger > .fade-in:nth-child(3) { transition-delay: 0.16s; }
-        .stagger > .fade-in:nth-child(4) { transition-delay: 0.24s; }
-        .stagger > .fade-in:nth-child(5) { transition-delay: 0.32s; }
-        .stagger > .fade-in:nth-child(6) { transition-delay: 0.4s; }
-        .stagger > .fade-in:nth-child(7) { transition-delay: 0.48s; }
-
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
-            .site-nav {
-                padding: 0.6rem 1rem;
-            }
+            .hero { padding: 3rem 1.5rem 2rem; }
 
-            .nav-links { gap: 0.2rem; }
-
-            .nav-link span { display: none; }
-
-            .hero {
-                padding: 4rem 1.5rem 3rem;
-            }
-
-            .hero-logo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .hero-title {
-                font-size: clamp(2.5rem, 10vw, 4rem);
-            }
-
-            .content {
-                padding: 0 1.25rem;
-            }
-
-            .featured-card {
-                padding: 1.5rem;
-            }
-
-            .featured-title {
-                font-size: 1.5rem;
-            }
-
-            .featured-grades {
+            .hero-top {
+                flex-direction: column;
                 gap: 1rem;
             }
+
+            .hero-text { text-align: center; }
+
+            .hero-logo { width: 80px; height: 80px; }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+
+            .hero-callout {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .featured-body { padding: 1.5rem; }
+            .featured-title { font-size: 1.5rem; }
+            .featured-grades { gap: 1rem; }
 
             .episode-item {
                 grid-template-columns: 40px 1fr auto;
                 gap: 0.8rem;
             }
 
-            .ep-thumb {
-                width: 40px;
-                height: 56px;
-            }
+            .ep-thumb { width: 40px; height: 56px; }
 
-            .ep-grades {
-                justify-content: flex-start;
-            }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
 
-            .stats-row {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .host-stats-grid {
+            .analytics-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .grade-bars {
-                height: 100px;
             }
         }
 
@@ -964,9 +593,7 @@
                 justify-content: center;
             }
 
-            .stats-row {
-                grid-template-columns: 1fr;
-            }
+            .stats-row { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -992,9 +619,31 @@
 
 <!-- Hero -->
 <section class="hero">
-    <img src="logo.png" alt="Rate This Sucker Podcast Logo" class="hero-logo">
-    <h1 class="hero-title">RATE THIS SUCKER</h1>
-    <p class="hero-subtitle">Three hosts. One grade. Endless disagreement. Brian, Joshua &amp; Greg rate movies, music, and TV so you don't have to think for yourself.</p>
+    <div class="hero-top">
+        <img src="logo.png" alt="Rate This Sucker Podcast Logo" class="hero-logo">
+        <div class="hero-text">
+            <h1 class="hero-title">RATE THIS SUCKER</h1>
+            <p class="hero-tagline">Three hosts. One grade. Endless disagreement.</p>
+        </div>
+    </div>
+
+    <!-- Host color legend -->
+    <div class="host-legend">
+        <span class="host-legend-item"><span class="host-legend-dot dot-brian"></span> Brian</span>
+        <span class="host-legend-item"><span class="host-legend-dot dot-joshua"></span> Joshua</span>
+        <span class="host-legend-item"><span class="host-legend-dot dot-greg"></span> Greg</span>
+    </div>
+
+    <!-- Dynamic: most controversial episode callout -->
+    <div class="hero-callout" id="hero-callout">
+        <div class="hero-callout-spread" id="callout-spread"></div>
+        <div>
+            <div class="hero-callout-label">Biggest Fight</div>
+            <div class="hero-callout-title" id="callout-title"></div>
+            <div class="hero-callout-grades" id="callout-grades"></div>
+        </div>
+    </div>
+
     <div class="hero-platforms">
         <a href="https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby?si=8d534e4bcd7544ee" target="_blank" class="platform-pill">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>
@@ -1016,7 +665,9 @@
     <section class="featured">
         <div class="section-label">Latest Episode</div>
         <div class="featured-card" id="featured-episode">
-            <div style="color: var(--text-dim); font-size: 0.9rem;">Loading latest episode...</div>
+            <div class="featured-body">
+                <div style="color: var(--text-dim); font-size: 0.9rem;">Loading latest episode...</div>
+            </div>
         </div>
     </section>
 
@@ -1038,26 +689,25 @@
         <div class="random-result" id="random-result"></div>
     </section>
 
-    <section class="stats">
-        <div class="section-label">Fight Statistics</div>
+    <section class="analytics">
+        <div class="section-label">By The Numbers</div>
+
         <div class="stats-row" id="stats-row">
             <div style="color: var(--text-dim); font-size: 0.9rem;">Loading stats...</div>
         </div>
-    </section>
 
-    <section class="grade-dist">
-        <div class="section-label">Grade Distribution</div>
-        <div class="grade-bars" id="grade-dist"></div>
-    </section>
+        <div class="grade-dist-rows" id="grade-dist"></div>
 
-    <section class="host-stats">
-        <div class="section-label">Host Report Card</div>
-        <div class="host-stats-grid" id="host-stats-grid"></div>
-    </section>
-
-    <section class="disagreements">
-        <div class="section-label">Most Controversial</div>
-        <div id="disagreements-list"></div>
+        <div class="analytics-grid">
+            <div>
+                <div class="analytics-col-label">Host Report Card</div>
+                <div class="host-stats-grid" id="host-stats-grid"></div>
+            </div>
+            <div>
+                <div class="analytics-col-label">Most Controversial</div>
+                <div id="disagreements-list"></div>
+            </div>
+        </div>
     </section>
 </div>
 
@@ -1089,6 +739,9 @@
     const SPOTIFY_URL = 'https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby';
     const gc = RTS.gradeClass;
 
+    // Category icons for thumbnail fallbacks
+    const TYPE_ICONS = { 'Movie': '🎬', 'TV Show': '📺', 'Music Album': '🎵', 'Documentary': '🎬' };
+
     function gradeBadge(grade, size = 'sm') {
         if (!grade) return '';
         return `<span class="grade grade-${size} grade-${gc(grade)}">${grade}</span>`;
@@ -1105,6 +758,51 @@
         return `<div class="ep-host-badge">${hostGradeBadge(grade, hostKey)}</div>`;
     }
 
+    function thumbHTML(ep, width, height) {
+        const overallClass = gc(ep.overallGrade);
+        if (ep.thumbnailUrl) {
+            const badge = ep.overallGrade
+                ? `<div class="thumb-grade-badge"><span class="grade grade-${overallClass}">${ep.overallGrade}</span></div>`
+                : '';
+            return `<div class="thumb-wrap" style="width:${width}px;height:${height}px;">${badge}<img src="${ep.thumbnailUrl}" alt="${ep.title}" loading="lazy"></div>`;
+        }
+        const icon = TYPE_ICONS[ep.type] || '🎧';
+        const anchorClass = overallClass ? `anchor-${overallClass}` : '';
+        const gradeEl = ep.overallGrade ? `<span class="grade grade-${overallClass}">${ep.overallGrade}</span>` : '';
+        return `<div class="thumb-wrap ${anchorClass}" style="width:${width}px;height:${height}px;">
+            <div class="thumb-fallback"><span class="thumb-fallback-icon">${icon}</span>${gradeEl}</div>
+        </div>`;
+    }
+
+    // ---- Hero Callout: most controversial ----
+    function renderHeroCallout(episodes) {
+        const graded = episodes.filter(e => {
+            const grades = [e.gregGrade, e.brianGrade, e.jrGrade].filter(g => g);
+            return grades.length >= 2 && !e.isSpecial;
+        });
+
+        let maxSpread = 0, controversial = null, hosts = [];
+        graded.forEach(ep => {
+            const nums = [
+                { host: 'Joshua', grade: ep.jrGrade, num: RTS.gradeToNumber(ep.jrGrade) },
+                { host: 'Greg', grade: ep.gregGrade, num: RTS.gradeToNumber(ep.gregGrade) },
+                { host: 'Brian', grade: ep.brianGrade, num: RTS.gradeToNumber(ep.brianGrade) },
+            ].filter(h => h.num !== null);
+            const spread = Math.max(...nums.map(n => n.num)) - Math.min(...nums.map(n => n.num));
+            if (spread > maxSpread) { maxSpread = spread; controversial = ep; hosts = nums; }
+        });
+
+        if (!controversial || maxSpread < 3) return;
+
+        document.getElementById('callout-spread').textContent = maxSpread.toFixed(1);
+        document.getElementById('callout-title').textContent = controversial.title;
+        document.getElementById('callout-grades').innerHTML = hosts.map(h =>
+            `<span class="disagreement-host">${h.host}: <span class="grade grade-sm grade-host-${h.host.toLowerCase()}">${h.grade}</span></span>`
+        ).join('');
+        document.getElementById('hero-callout').classList.add('visible');
+    }
+
+    // ---- Featured Episode ----
     function renderFeatured(ep) {
         const el = document.getElementById('featured-episode');
         const grades = [];
@@ -1115,23 +813,25 @@
         const typeLine = [ep.type, ep.genre?.split(',')[0]].filter(Boolean).join(' · ');
 
         el.innerHTML = `
-            <div class="featured-eyebrow">Episode ${ep.number}${typeLine ? ' · ' + typeLine : ''}</div>
-            <h2 class="featured-title">${ep.title}</h2>
-            ${ep.dateFormatted ? `<div class="featured-meta">${ep.dateFormatted}</div>` : ''}
-            ${grades.length ? `<div class="featured-grades">${grades.join('')}</div>` : ''}
-            ${ep.subtitle ? `<div class="featured-description"><p>${ep.subtitle}</p></div>` : ''}
-            <div class="spotify-embed">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/show/5YRq3rGYDSoOqjN4fuTTby?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div class="featured-body">
+                <div class="featured-eyebrow">Episode ${ep.number}${typeLine ? ' · ' + typeLine : ''}</div>
+                <h2 class="featured-title">${ep.title}</h2>
+                ${ep.dateFormatted ? `<div class="featured-meta">${ep.dateFormatted}</div>` : ''}
+                ${grades.length ? `<div class="featured-grades">${grades.join('')}</div>` : ''}
+                ${ep.subtitle ? `<div class="featured-description"><p>${ep.subtitle}</p></div>` : ''}
+                <button class="cta-btn" onclick="window.open('${SPOTIFY_URL}', '_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                    Listen on Spotify
+                </button>
             </div>
-            <button class="cta-btn" onclick="window.open('${SPOTIFY_URL}', '_blank')">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-                Listen on Spotify
-            </button>`;
+            <div class="spotify-embed">
+                <iframe style="border-radius:0" src="https://open.spotify.com/embed/show/5YRq3rGYDSoOqjN4fuTTby?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>`;
     }
 
+    // ---- Episode List ----
     function renderEpisodeList(episodes) {
         const el = document.getElementById('episode-list');
-        // Show up to 10 recent episodes (skip the featured one)
         const recent = episodes.slice(1, 11);
 
         el.innerHTML = recent.map(ep => {
@@ -1145,12 +845,9 @@
             ].filter(Boolean).join('');
 
             const epUrl = ep.spotifyUrl || SPOTIFY_URL;
-            const thumbContent = ep.thumbnailUrl
-                ? `<img src="${ep.thumbnailUrl}" alt="${ep.title}" loading="lazy">`
-                : `<span class="ep-thumb-fallback">Ep ${ep.number}</span>`;
 
             return `<a class="episode-item" href="${epUrl}" target="_blank">
-                <div class="ep-thumb">${thumbContent}</div>
+                ${thumbHTML(ep, 48, 68)}
                 <div class="ep-body">
                     <div class="ep-title">${ep.title}</div>
                     <div class="ep-detail">${detailParts.join(' <span>&middot;</span> ')}</div>
@@ -1159,16 +856,15 @@
             </a>`;
         }).join('');
 
-        // Re-observe new fade-in elements
         el.querySelectorAll('.fade-in').forEach(e => observer.observe(e));
     }
 
+    // ---- Stats ----
     function renderStats(episodes) {
         const el = document.getElementById('stats-row');
         const graded = episodes.filter(e => e.hasGrades && !e.isSpecial);
         const total = episodes.filter(e => !e.isSpecial).length;
 
-        // Find highest and lowest rated
         let highest = null, lowest = null;
         let highScore = -1, lowScore = 999;
 
@@ -1191,12 +887,12 @@
             </div>
             <div class="stat-block">
                 <div class="stat-number" style="color: var(--grade-a-text);">${highGrade}</div>
-                <div class="stat-desc">Highest Rated</div>
+                <div class="stat-desc">Highest</div>
                 <div class="stat-detail">${highest ? highest.title : ''}</div>
             </div>
             <div class="stat-block">
                 <div class="stat-number" style="color: var(--grade-d-text);">${lowGrade}</div>
-                <div class="stat-desc">Lowest Rated</div>
+                <div class="stat-desc">Lowest</div>
                 <div class="stat-detail">${lowest ? lowest.title : ''}</div>
             </div>
             <div class="stat-block">
@@ -1205,7 +901,7 @@
             </div>`;
     }
 
-    // ---- Grade Distribution ----
+    // ---- Grade Distribution (horizontal bars) ----
     function renderGradeDist(episodes) {
         const graded = episodes.filter(e => e.hasGrades && !e.isSpecial);
         const buckets = { A: 0, B: 0, C: 0, D: 0, F: 0 };
@@ -1215,20 +911,20 @@
             if (!g) return;
             const letter = g.charAt(0);
             if (buckets[letter] !== undefined) buckets[letter]++;
-            else if (letter === 'F') buckets.F++;
         });
 
         const max = Math.max(...Object.values(buckets), 1);
         const colors = { A: 'var(--grade-a-text)', B: 'var(--grade-b-text)', C: 'var(--grade-c-text)', D: 'var(--grade-d-text)', F: 'var(--grade-d-text)' };
-        const bgColors = { A: 'var(--grade-a-bg)', B: 'var(--grade-b-bg)', C: 'var(--grade-c-bg)', D: 'var(--grade-d-bg)', F: 'var(--grade-d-bg)' };
 
         const el = document.getElementById('grade-dist');
         el.innerHTML = Object.entries(buckets).map(([letter, count]) => {
             const pct = (count / max) * 100;
-            return `<div class="grade-bar-col">
-                <div class="grade-bar-count">${count}</div>
-                <div class="grade-bar" style="height: ${pct}%; background: ${colors[letter]}; opacity: 0.7;"></div>
-                <div class="grade-bar-label" style="color: ${colors[letter]};">${letter}</div>
+            return `<div class="grade-dist-row">
+                <div class="grade-dist-label" style="color: ${colors[letter]};">${letter}</div>
+                <div class="grade-dist-bar-track">
+                    <div class="grade-dist-bar" style="width: ${pct}%; background: ${colors[letter]}; opacity: 0.7;"></div>
+                </div>
+                <div class="grade-dist-count">${count}</div>
             </div>`;
         }).join('');
     }
@@ -1245,7 +941,6 @@
             const highest = Math.max(...nums);
             const lowest = Math.min(...nums);
 
-            // Most common grade letter
             const freq = {};
             grades.forEach(g => { const l = g.charAt(0); freq[l] = (freq[l] || 0) + 1; });
             const fav = Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
@@ -1343,7 +1038,7 @@
         randomResult.classList.add('visible');
     });
 
-    // Intersection Observer for fade-in animations
+    // Intersection Observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -1357,6 +1052,7 @@
         if (episodes.length === 0) return;
         episodes = await RTS.enrichWithPosters(episodes);
         allEpisodes = episodes;
+        renderHeroCallout(episodes);
         renderFeatured(episodes[0]);
         renderEpisodeList(episodes);
         renderStats(episodes);
@@ -1366,7 +1062,7 @@
         randomBtn.style.display = '';
     }).catch(err => {
         console.error('Failed to load episodes:', err);
-        document.getElementById('featured-episode').innerHTML = '<div style="color: var(--accent-red);">Could not load episodes. Please try again later.</div>';
+        document.getElementById('featured-episode').querySelector('.featured-body').innerHTML = '<div style="color: var(--accent-red);">Could not load episodes. Please try again later.</div>';
     });
 </script>
 </body>

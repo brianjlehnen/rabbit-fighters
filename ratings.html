@@ -20,168 +20,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --bg: #1a1714;
-            --bg-surface: #242019;
-            --bg-elevated: #2e2a23;
-            --text: #e8e0d4;
-            --text-muted: #a89f91;
-            --text-dim: #6b6358;
-            --accent-teal: #50C9C3;
-            --accent-red: #E8453C;
-            --grade-gold: #D4A843;
-            --border: rgba(168, 159, 145, 0.12);
-            --border-hover: rgba(168, 159, 145, 0.25);
-
-            --grade-a-bg: rgba(80, 201, 195, 0.15);
-            --grade-a-border: rgba(80, 201, 195, 0.4);
-            --grade-a-text: #50C9C3;
-            --grade-b-bg: rgba(212, 168, 67, 0.15);
-            --grade-b-border: rgba(212, 168, 67, 0.4);
-            --grade-b-text: #D4A843;
-            --grade-c-bg: rgba(210, 130, 50, 0.15);
-            --grade-c-border: rgba(210, 130, 50, 0.4);
-            --grade-c-text: #d28232;
-            --grade-d-bg: rgba(232, 69, 60, 0.15);
-            --grade-d-border: rgba(232, 69, 60, 0.4);
-            --grade-d-text: #E8453C;
-
-            /* Host colors */
-            --host-brian: #7BA68C;
-            --host-brian-bg: rgba(123, 166, 140, 0.15);
-            --host-brian-border: rgba(123, 166, 140, 0.4);
-            --host-joshua: #C4973B;
-            --host-joshua-bg: rgba(196, 151, 59, 0.15);
-            --host-joshua-border: rgba(196, 151, 59, 0.4);
-            --host-greg: #C46B5C;
-            --host-greg-bg: rgba(196, 107, 92, 0.15);
-            --host-greg-border: rgba(196, 107, 92, 0.4);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        /* ---- Grade Badges ---- */
-        .grade {
-            font-family: 'Bangers', cursive;
-            display: inline-block;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            line-height: 1;
-        }
-
-        .grade-sm {
-            font-size: 0.95rem;
-            padding: 0.2rem 0.45rem;
-        }
-
-        .grade-a { color: var(--grade-a-text); background: var(--grade-a-bg); border: 1px solid var(--grade-a-border); }
-        .grade-b { color: var(--grade-b-text); background: var(--grade-b-bg); border: 1px solid var(--grade-b-border); }
-        .grade-c { color: var(--grade-c-text); background: var(--grade-c-bg); border: 1px solid var(--grade-c-border); }
-        .grade-d { color: var(--grade-d-text); background: var(--grade-d-bg); border: 1px solid var(--grade-d-border); }
-
-        /* Host-colored grade badges */
-        .grade-host-brian { color: var(--host-brian); background: var(--host-brian-bg); border: 1px solid var(--host-brian-border); }
-        .grade-host-joshua { color: var(--host-joshua); background: var(--host-joshua-bg); border: 1px solid var(--host-joshua-border); }
-        .grade-host-greg { color: var(--host-greg); background: var(--host-greg-bg); border: 1px solid var(--host-greg-border); }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjA4Ii8+PC9zdmc+');
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.5;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-        /* ---- Nav ---- */
-        .site-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(26, 23, 20, 0.92);
-            border-bottom: 1px solid var(--border);
-            padding: 0.8rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text);
-            flex-shrink: 0;
-        }
-
-        .nav-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            object-fit: contain;
-        }
-
-        .nav-title {
-            font-family: 'Bangers', cursive;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-            color: var(--text);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.4rem 0.7rem;
-            border-radius: 6px;
-            transition: color 0.2s, background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--bg-elevated);
-        }
-
-        .nav-link svg { width: 16px; height: 16px; }
-
-        /* ---- Content ---- */
-        .content {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
         /* ---- Page Header ---- */
         .page-header {
-            padding: 3rem 0 2rem;
+            padding: 3rem 0 1rem;
             text-align: center;
         }
 
@@ -194,7 +37,7 @@
 
         .page-subtitle {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         /* ---- Filters ---- */
@@ -218,12 +61,15 @@
             transition: border-color 0.2s;
         }
 
-        .search-input::placeholder {
-            color: var(--text-dim);
-        }
+        .search-input::placeholder { color: var(--text-dim); }
+        .search-input:focus { border-color: var(--accent-teal); }
 
-        .search-input:focus {
-            border-color: var(--accent-teal);
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
         }
 
         .grade-toggles {
@@ -265,9 +111,7 @@
         }
 
         /* ---- Episode Cards ---- */
-        .episodes-list {
-            padding: 0 0 4rem;
-        }
+        .episodes-list { padding: 0 0 4rem; }
 
         .episode-card {
             display: grid;
@@ -276,97 +120,43 @@
             align-items: center;
             padding: 1.5rem 0;
             border-bottom: 1px solid var(--border);
-            transition: all 0.2s;
+            transition: all 0.25s ease;
+            border-radius: 8px;
+            margin: 0 -0.5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
         }
 
-        .episode-card:last-child {
-            border-bottom: none;
-        }
+        .episode-card:last-child { border-bottom: none; }
 
         .episode-card:hover {
-            padding-left: 0.5rem;
+            background: var(--bg-surface);
+            border-color: transparent;
         }
 
         .episode-card:hover .card-title {
             color: var(--accent-teal);
         }
 
-        /* Thumbnail with grade overlay */
-        .card-thumb-wrap {
-            width: 72px;
-            height: 100px;
-            border-radius: 8px;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-        }
-
-        .card-thumb-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Fallback when no image: show grade centered */
-        .card-thumb-fallback {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .card-thumb-fallback .grade {
-            font-size: 1.9rem;
-            padding: 0.2rem 0.4rem;
-            transform: rotate(-2deg);
-            border: none;
-            background: transparent;
-        }
-
-        .card-thumb-wrap.anchor-a { background: var(--grade-a-bg); border-color: var(--grade-a-border); }
-        .card-thumb-wrap.anchor-b { background: var(--grade-b-bg); border-color: var(--grade-b-border); }
-        .card-thumb-wrap.anchor-c { background: var(--grade-c-bg); border-color: var(--grade-c-border); }
-        .card-thumb-wrap.anchor-d { background: var(--grade-d-bg); border-color: var(--grade-d-border); }
-
-        /* Grade badge overlay on thumbnail */
-        .card-grade-badge {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            z-index: 2;
-        }
-
-        .card-grade-badge .grade {
-            font-size: 0.75rem;
-            padding: 0.15rem 0.35rem;
-            transform: rotate(2deg);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-        }
-
-        .card-body {
-            min-width: 0;
-        }
+        .card-body { min-width: 0; }
 
         .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 800;
             margin-bottom: 0.25rem;
             transition: color 0.2s;
+            letter-spacing: -0.01em;
         }
 
         .card-meta {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-dim);
             margin-bottom: 0.75rem;
         }
 
         .card-host-grades {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
         }
 
@@ -383,9 +173,7 @@
             transform: rotate(-1deg);
         }
 
-        .card-listen {
-            flex-shrink: 0;
-        }
+        .card-listen { flex-shrink: 0; }
 
         .listen-link {
             display: inline-flex;
@@ -406,10 +194,7 @@
             border-color: var(--accent-teal);
         }
 
-        .listen-link svg {
-            width: 14px;
-            height: 14px;
-        }
+        .listen-link svg { width: 14px; height: 14px; }
 
         /* ---- No Results ---- */
         .no-results {
@@ -419,90 +204,10 @@
             display: none;
         }
 
-        .no-results.visible {
-            display: block;
-        }
-
-        /* ---- Footer ---- */
-        .site-footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .footer-link:hover { color: var(--accent-teal); }
-
-        .footer-dot {
-            color: var(--text-dim);
-            font-size: 0.6rem;
-        }
-
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-social a {
-            color: var(--text-dim);
-            transition: color 0.2s;
-        }
-
-        .footer-social a:hover { color: var(--accent-red); }
-        .footer-social svg { width: 20px; height: 20px; }
-
-        .footer-production {
-            font-family: 'Bangers', cursive;
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            margin-bottom: 0.3rem;
-        }
-
-        .footer-tagline {
-            font-style: italic;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-
-        /* ---- Animations ---- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .no-results.visible { display: block; }
 
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
-            .site-nav { padding: 0.6rem 1rem; }
-            .nav-link span { display: none; }
-
-            .content { padding: 0 1.25rem; }
-
             .episode-card {
                 grid-template-columns: auto 1fr;
                 gap: 1rem;
@@ -517,24 +222,11 @@
                 justify-content: center;
             }
 
-            .card-thumb-wrap {
-                width: 56px;
-                height: 78px;
-            }
-
-            .card-thumb-fallback .grade {
-                font-size: 1.3rem;
-            }
-
-            .card-title {
-                font-size: 1rem;
-            }
+            .card-title { font-size: 1rem; }
         }
 
         @media (max-width: 480px) {
-            .grade-toggles {
-                justify-content: center;
-            }
+            .grade-toggles { justify-content: center; }
         }
     </style>
 </head>
@@ -563,12 +255,18 @@
     <div class="page-header">
         <h1 class="page-title">ALL EPISODES</h1>
         <p class="page-subtitle">Every rating. Every argument. Catalogued for posterity.</p>
+        <!-- Host color legend -->
+        <div class="host-legend" style="margin-top: 1rem;">
+            <span class="host-legend-item"><span class="host-legend-dot dot-brian"></span> Brian</span>
+            <span class="host-legend-item"><span class="host-legend-dot dot-joshua"></span> Joshua</span>
+            <span class="host-legend-item"><span class="host-legend-dot dot-greg"></span> Greg</span>
+        </div>
     </div>
 
     <!-- Filters -->
     <div class="filters">
         <input type="text" id="search-input" class="search-input" placeholder="Search episodes..." />
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+        <div class="filter-row">
             <div class="grade-toggles" id="grade-toggles">
                 <button class="grade-toggle active" data-grade="all">All</button>
                 <button class="grade-toggle" data-grade="A">A</button>
@@ -625,6 +323,7 @@
     const SPOTIFY_URL = 'https://open.spotify.com/show/5YRq3rGYDSoOqjN4fuTTby';
     const SPOTIFY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.32 11.28-1.08 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>';
     const gc = RTS.gradeClass;
+    const TYPE_ICONS = { 'Movie': '🎬', 'TV Show': '📺', 'Music Album': '🎵', 'Documentary': '🎬' };
 
     let allCards = [];
     let loadedEpisodes = [];
@@ -643,12 +342,26 @@
         </div>`;
     }
 
+    function thumbHTML(ep) {
+        const overallClass = gc(ep.overallGrade);
+        if (ep.thumbnailUrl) {
+            const badge = ep.overallGrade
+                ? `<div class="thumb-grade-badge"><span class="grade grade-${overallClass}">${ep.overallGrade}</span></div>`
+                : '';
+            return `<div class="thumb-wrap" style="width:72px;height:100px;">${badge}<img src="${ep.thumbnailUrl}" alt="${ep.title}" loading="lazy"></div>`;
+        }
+        const icon = TYPE_ICONS[ep.type] || '🎧';
+        const anchorClass = overallClass ? `anchor-${overallClass}` : '';
+        const gradeEl = ep.overallGrade ? `<span class="grade grade-${overallClass}" style="font-size:1.6rem;">${ep.overallGrade}</span>` : '';
+        return `<div class="thumb-wrap ${anchorClass}" style="width:72px;height:100px;">
+            <div class="thumb-fallback"><span class="thumb-fallback-icon">${icon}</span>${gradeEl}</div>
+        </div>`;
+    }
+
     function renderEpisodes(episodes) {
-        // Filter out specials without grades
         const showable = episodes.filter(ep => !ep.isSpecial);
 
         container.innerHTML = showable.map(ep => {
-            const overallClass = gc(ep.overallGrade);
             const metaParts = [`Ep ${ep.number}`];
             if (ep.dateFormatted) metaParts.push(ep.dateFormatted);
             if (ep.genre) metaParts.push(ep.genre.split(',')[0].trim());
@@ -660,20 +373,9 @@
             ].filter(Boolean).join('');
 
             const epUrl = ep.spotifyUrl || SPOTIFY_URL;
-            const gradeBadge = ep.overallGrade
-                ? `<div class="card-grade-badge"><span class="grade grade-${overallClass}">${ep.overallGrade}</span></div>`
-                : '';
-            const thumbContent = ep.thumbnailUrl
-                ? `<img src="${ep.thumbnailUrl}" alt="${ep.title}" loading="lazy">${gradeBadge}`
-                : (ep.overallGrade
-                    ? `<div class="card-thumb-fallback"><span class="grade grade-${overallClass}">${ep.overallGrade}</span></div>`
-                    : `<div class="card-thumb-fallback"><span style="color: var(--text-dim); font-size: 0.8rem;">—</span></div>`);
-            const thumbClass = !ep.thumbnailUrl && overallClass ? `anchor-${overallClass}` : '';
 
             return `<div class="episode-card fade-in" id="ep${ep.number}" data-grade="${ep.overallGrade || ''}" data-title="${ep.title}" data-meta="${ep.title} ${ep.subtitle} ${ep.genre} ${ep.type} Ep ${ep.number}">
-                <div class="card-thumb-wrap ${thumbClass}">
-                    ${thumbContent}
-                </div>
+                ${thumbHTML(ep)}
                 <div class="card-body">
                     <div class="card-title">${ep.title}</div>
                     <div class="card-meta">${metaParts.join(' · ')}</div>
@@ -688,7 +390,6 @@
         allCards = Array.from(container.querySelectorAll('.episode-card'));
         resultsInfo.textContent = `Showing all ${allCards.length} episodes`;
 
-        // Observe fade-ins
         container.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
@@ -747,7 +448,7 @@
             case 'controversial':
                 sorted.sort((a, b) => getEpSpread(b) - getEpSpread(a));
                 break;
-            default: // date
+            default:
                 sorted.sort((a, b) => b.numericNumber - a.numericNumber);
         }
         return sorted;
@@ -789,7 +490,6 @@
         loadedEpisodes = episodes;
         renderEpisodes(episodes);
 
-        // Deep link: scroll to episode if hash present
         if (window.location.hash) {
             const target = document.querySelector(window.location.hash);
             if (target) {
