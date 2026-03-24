@@ -361,22 +361,6 @@
             gap: 0.3rem;
         }
 
-        .card-host-grade .host-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bangers', cursive;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-        }
-
-        .card-host-grade .host-avatar.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 1.5px solid var(--grade-a-border); }
-        .card-host-grade .host-avatar.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 1.5px solid var(--grade-b-border); }
-        .card-host-grade .host-avatar.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 1.5px solid var(--grade-d-border); }
-
         .card-host-grade .grade {
             font-size: 1.25rem;
             padding: 0.25rem 0.5rem;
@@ -636,9 +620,7 @@
 
     function hostGradeBadge(name, initial, grade) {
         if (!grade) return '';
-        const avatarClass = `avatar-${name.toLowerCase()}`;
         return `<div class="card-host-grade">
-            <span class="host-avatar ${avatarClass}">${initial}</span>
             <span class="grade grade-sm grade-${gc(grade)}">${grade}</span>
         </div>`;
     }

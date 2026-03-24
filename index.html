@@ -338,22 +338,6 @@
             gap: 0.4rem;
         }
 
-        .host-grade .host-avatar-lg {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bangers', cursive;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-        }
-
-        .host-grade .host-avatar-lg.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 1.5px solid var(--grade-a-border); }
-        .host-grade .host-avatar-lg.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 1.5px solid var(--grade-b-border); }
-        .host-grade .host-avatar-lg.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 1.5px solid var(--grade-d-border); }
-
         .host-grade-name {
             font-size: 0.7rem;
             font-weight: 600;
@@ -484,29 +468,6 @@
             gap: 0.25rem;
         }
 
-        .ep-host-badge .host-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bangers', cursive;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        .ep-host-badge .host-avatar.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 1px solid var(--grade-a-border); }
-        .ep-host-badge .host-avatar.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 1px solid var(--grade-b-border); }
-        .ep-host-badge .host-avatar.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 1px solid var(--grade-d-border); }
-
-        .ep-host-badge .host-initial {
-            font-size: 0.55rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
 
         .view-all-link {
             display: inline-flex;
@@ -666,10 +627,33 @@
 
         .host-stat-card:hover { border-color: var(--border-hover); }
 
+        .host-stat-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .host-stat-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .host-stat-avatar.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 2px solid var(--grade-a-border); }
+        .host-stat-avatar.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 2px solid var(--grade-b-border); }
+        .host-stat-avatar.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 2px solid var(--grade-d-border); }
+
         .host-stat-name {
             font-weight: 700;
             font-size: 1rem;
-            margin-bottom: 1rem;
         }
 
         .host-stat-row {
@@ -1067,16 +1051,15 @@
 
     function hostBadge(name, initial, grade) {
         if (!grade) return '';
-        const avatarClass = `avatar-${name.toLowerCase()}`;
-        return `<div class="ep-host-badge"><span class="host-avatar ${avatarClass}">${initial}</span>${gradeBadge(grade)}</div>`;
+        return `<div class="ep-host-badge">${gradeBadge(grade)}</div>`;
     }
 
     function renderFeatured(ep) {
         const el = document.getElementById('featured-episode');
         const grades = [];
-        if (ep.jrGrade) grades.push(`<div class="host-grade"><span class="host-avatar-lg avatar-joshua">J</span><span class="host-grade-name">Joshua</span>${gradeBadge(ep.jrGrade, 'md')}</div>`);
-        if (ep.gregGrade) grades.push(`<div class="host-grade"><span class="host-avatar-lg avatar-greg">G</span><span class="host-grade-name">Greg</span>${gradeBadge(ep.gregGrade, 'md')}</div>`);
-        if (ep.brianGrade) grades.push(`<div class="host-grade"><span class="host-avatar-lg avatar-brian">B</span><span class="host-grade-name">Brian</span>${gradeBadge(ep.brianGrade, 'md')}</div>`);
+        if (ep.jrGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Joshua</span>${gradeBadge(ep.jrGrade, 'md')}</div>`);
+        if (ep.gregGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Greg</span>${gradeBadge(ep.gregGrade, 'md')}</div>`);
+        if (ep.brianGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Brian</span>${gradeBadge(ep.brianGrade, 'md')}</div>`);
 
         const typeLine = [ep.type, ep.genre?.split(',')[0]].filter(Boolean).join(' · ');
 
@@ -1231,8 +1214,10 @@
         el.innerHTML = hosts.map(h => {
             if (!h.data) return '';
             const d = h.data;
+            const initial = h.name.charAt(0);
+            const avatarClass = `avatar-${h.name.toLowerCase()}`;
             return `<div class="host-stat-card">
-                <div class="host-stat-name">${h.name}</div>
+                <div class="host-stat-header"><span class="host-stat-avatar ${avatarClass}">${initial}</span><div class="host-stat-name">${h.name}</div></div>
                 <div class="host-stat-row"><span>Average</span><span class="host-stat-value">${d.avg}</span></div>
                 <div class="host-stat-row"><span>Highest</span><span class="host-stat-value">${d.highest}</span></div>
                 <div class="host-stat-row"><span>Lowest</span><span class="host-stat-value">${d.lowest}</span></div>
