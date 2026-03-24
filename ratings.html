@@ -334,12 +334,10 @@
     const resultsInfo = document.getElementById('results-info');
     const noResults = document.getElementById('no-results');
 
-    function hostGradeBadge(name, initial, grade) {
+    function hostGradeBadge(name, grade) {
         if (!grade) return '';
         const hostKey = name.toLowerCase();
-        return `<div class="card-host-grade">
-            <span class="grade grade-sm grade-host-${hostKey}">${grade}</span>
-        </div>`;
+        return `<span class="grade grade-sm grade-host-${hostKey}">${grade}</span>`;
     }
 
     function thumbHTML(ep) {
@@ -367,9 +365,9 @@
             if (ep.genre) metaParts.push(ep.genre.split(',')[0].trim());
 
             const hostGrades = [
-                hostGradeBadge('Joshua', 'J', ep.jrGrade),
-                hostGradeBadge('Greg', 'G', ep.gregGrade),
-                hostGradeBadge('Brian', 'B', ep.brianGrade),
+                hostGradeBadge('Brian', ep.brianGrade),
+                hostGradeBadge('Joshua', ep.jrGrade),
+                hostGradeBadge('Greg', ep.gregGrade),
             ].filter(Boolean).join('');
 
             const epUrl = ep.spotifyUrl || SPOTIFY_URL;
