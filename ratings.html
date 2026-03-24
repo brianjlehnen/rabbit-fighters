@@ -46,6 +46,17 @@
             --grade-d-bg: rgba(232, 69, 60, 0.15);
             --grade-d-border: rgba(232, 69, 60, 0.4);
             --grade-d-text: #E8453C;
+
+            /* Host colors */
+            --host-brian: #7BA68C;
+            --host-brian-bg: rgba(123, 166, 140, 0.15);
+            --host-brian-border: rgba(123, 166, 140, 0.4);
+            --host-joshua: #C4973B;
+            --host-joshua-bg: rgba(196, 151, 59, 0.15);
+            --host-joshua-border: rgba(196, 151, 59, 0.4);
+            --host-greg: #C46B5C;
+            --host-greg-bg: rgba(196, 107, 92, 0.15);
+            --host-greg-border: rgba(196, 107, 92, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,6 +79,11 @@
         .grade-b { color: var(--grade-b-text); background: var(--grade-b-bg); border: 1px solid var(--grade-b-border); }
         .grade-c { color: var(--grade-c-text); background: var(--grade-c-bg); border: 1px solid var(--grade-c-border); }
         .grade-d { color: var(--grade-d-text); background: var(--grade-d-bg); border: 1px solid var(--grade-d-border); }
+
+        /* Host-colored grade badges */
+        .grade-host-brian { color: var(--host-brian); background: var(--host-brian-bg); border: 1px solid var(--host-brian-border); }
+        .grade-host-joshua { color: var(--host-joshua); background: var(--host-joshua-bg); border: 1px solid var(--host-joshua-border); }
+        .grade-host-greg { color: var(--host-greg); background: var(--host-greg-bg); border: 1px solid var(--host-greg-border); }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -362,8 +378,9 @@
         }
 
         .card-host-grade .grade {
-            font-size: 1.25rem;
-            padding: 0.25rem 0.5rem;
+            font-size: 1.4rem;
+            padding: 0.3rem 0.6rem;
+            transform: rotate(-1deg);
         }
 
         .card-listen {
@@ -620,8 +637,9 @@
 
     function hostGradeBadge(name, initial, grade) {
         if (!grade) return '';
+        const hostKey = name.toLowerCase();
         return `<div class="card-host-grade">
-            <span class="grade grade-sm grade-${gc(grade)}">${grade}</span>
+            <span class="grade grade-sm grade-host-${hostKey}">${grade}</span>
         </div>`;
     }
 

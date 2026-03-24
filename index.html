@@ -41,7 +41,7 @@
             --border: rgba(168, 159, 145, 0.12);
             --border-hover: rgba(168, 159, 145, 0.25);
 
-            /* Grade colors */
+            /* Grade colors (for overall grades, stats, distribution) */
             --grade-a-bg: rgba(80, 201, 195, 0.15);
             --grade-a-border: rgba(80, 201, 195, 0.4);
             --grade-a-text: #50C9C3;
@@ -54,6 +54,17 @@
             --grade-d-bg: rgba(232, 69, 60, 0.15);
             --grade-d-border: rgba(232, 69, 60, 0.4);
             --grade-d-text: #E8453C;
+
+            /* Host colors (for individual host grade badges) */
+            --host-brian: #7BA68C;
+            --host-brian-bg: rgba(123, 166, 140, 0.15);
+            --host-brian-border: rgba(123, 166, 140, 0.4);
+            --host-joshua: #C4973B;
+            --host-joshua-bg: rgba(196, 151, 59, 0.15);
+            --host-joshua-border: rgba(196, 151, 59, 0.4);
+            --host-greg: #C46B5C;
+            --host-greg-bg: rgba(196, 107, 92, 0.15);
+            --host-greg-border: rgba(196, 107, 92, 0.4);
         }
 
         * {
@@ -288,6 +299,11 @@
         .grade-b { color: var(--grade-b-text); background: var(--grade-b-bg); border: 1px solid var(--grade-b-border); }
         .grade-c { color: var(--grade-c-text); background: var(--grade-c-bg); border: 1px solid var(--grade-c-border); }
         .grade-d { color: var(--grade-d-text); background: var(--grade-d-bg); border: 1px solid var(--grade-d-border); }
+
+        /* Host-colored grade badges */
+        .grade-host-brian { color: var(--host-brian); background: var(--host-brian-bg); border: 1px solid var(--host-brian-border); }
+        .grade-host-joshua { color: var(--host-joshua); background: var(--host-joshua-bg); border: 1px solid var(--host-joshua-border); }
+        .grade-host-greg { color: var(--host-greg); background: var(--host-greg-bg); border: 1px solid var(--host-greg-border); }
 
         /* ---- Featured Episode ---- */
         .featured {
@@ -647,9 +663,9 @@
             letter-spacing: 0.5px;
         }
 
-        .host-stat-avatar.avatar-brian { background: var(--grade-a-bg); color: var(--grade-a-text); border: 2px solid var(--grade-a-border); }
-        .host-stat-avatar.avatar-joshua { background: var(--grade-b-bg); color: var(--grade-b-text); border: 2px solid var(--grade-b-border); }
-        .host-stat-avatar.avatar-greg { background: var(--grade-d-bg); color: var(--grade-d-text); border: 2px solid var(--grade-d-border); }
+        .host-stat-avatar.avatar-brian { background: var(--host-brian-bg); color: var(--host-brian); border: 2px solid var(--host-brian-border); }
+        .host-stat-avatar.avatar-joshua { background: var(--host-joshua-bg); color: var(--host-joshua); border: 2px solid var(--host-joshua-border); }
+        .host-stat-avatar.avatar-greg { background: var(--host-greg-bg); color: var(--host-greg); border: 2px solid var(--host-greg-border); }
 
         .host-stat-name {
             font-weight: 700;
@@ -1049,17 +1065,23 @@
         return `<span class="grade grade-${size} grade-${gc(grade)}">${grade}</span>`;
     }
 
+    function hostGradeBadge(grade, hostKey, size = 'sm') {
+        if (!grade) return '';
+        return `<span class="grade grade-${size} grade-host-${hostKey}">${grade}</span>`;
+    }
+
     function hostBadge(name, initial, grade) {
         if (!grade) return '';
-        return `<div class="ep-host-badge">${gradeBadge(grade)}</div>`;
+        const hostKey = name.toLowerCase();
+        return `<div class="ep-host-badge">${hostGradeBadge(grade, hostKey)}</div>`;
     }
 
     function renderFeatured(ep) {
         const el = document.getElementById('featured-episode');
         const grades = [];
-        if (ep.jrGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Joshua</span>${gradeBadge(ep.jrGrade, 'md')}</div>`);
-        if (ep.gregGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Greg</span>${gradeBadge(ep.gregGrade, 'md')}</div>`);
-        if (ep.brianGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Brian</span>${gradeBadge(ep.brianGrade, 'md')}</div>`);
+        if (ep.jrGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Joshua</span>${hostGradeBadge(ep.jrGrade, 'joshua', 'md')}</div>`);
+        if (ep.gregGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Greg</span>${hostGradeBadge(ep.gregGrade, 'greg', 'md')}</div>`);
+        if (ep.brianGrade) grades.push(`<div class="host-grade"><span class="host-grade-name">Brian</span>${hostGradeBadge(ep.brianGrade, 'brian', 'md')}</div>`);
 
         const typeLine = [ep.type, ep.genre?.split(',')[0]].filter(Boolean).join(' · ');
 
@@ -1251,7 +1273,7 @@
 
         el.innerHTML = top5.map(d => {
             const hostGrades = d.hosts.map(h =>
-                `<span class="disagreement-host">${h.host}: <span class="grade grade-sm grade-${gc(h.grade)}">${h.grade}</span></span>`
+                `<span class="disagreement-host">${h.host}: <span class="grade grade-sm grade-host-${h.host.toLowerCase()}">${h.grade}</span></span>`
             ).join('');
             return `<div class="disagreement-item">
                 <div class="disagreement-spread">${d.spread.toFixed(1)}</div>
@@ -1275,9 +1297,9 @@
         const url = ep.spotifyUrl || SPOTIFY_URL;
 
         const hostGrades = [
-            ep.jrGrade ? `<span class="disagreement-host">Joshua: <span class="grade grade-sm grade-${gc(ep.jrGrade)}">${ep.jrGrade}</span></span>` : '',
-            ep.gregGrade ? `<span class="disagreement-host">Greg: <span class="grade grade-sm grade-${gc(ep.gregGrade)}">${ep.gregGrade}</span></span>` : '',
-            ep.brianGrade ? `<span class="disagreement-host">Brian: <span class="grade grade-sm grade-${gc(ep.brianGrade)}">${ep.brianGrade}</span></span>` : '',
+            ep.jrGrade ? `<span class="disagreement-host">Joshua: <span class="grade grade-sm grade-host-joshua">${ep.jrGrade}</span></span>` : '',
+            ep.gregGrade ? `<span class="disagreement-host">Greg: <span class="grade grade-sm grade-host-greg">${ep.gregGrade}</span></span>` : '',
+            ep.brianGrade ? `<span class="disagreement-host">Brian: <span class="grade grade-sm grade-host-brian">${ep.brianGrade}</span></span>` : '',
         ].filter(Boolean).join('');
 
         randomResult.innerHTML = `
