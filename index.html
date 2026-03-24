@@ -415,10 +415,10 @@
 
         .episode-item {
             display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 1.2rem;
+            grid-template-columns: 48px 1fr auto;
+            gap: 1rem;
             align-items: center;
-            padding: 1.2rem 0;
+            padding: 1rem 0;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
             text-decoration: none;
@@ -438,12 +438,38 @@
             color: var(--accent-teal);
         }
 
+        .ep-thumb {
+            width: 48px;
+            height: 68px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ep-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ep-thumb-fallback {
+            font-family: 'Bangers', cursive;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 0.5px;
+        }
+
         .ep-num {
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-dim);
             letter-spacing: 0.5px;
-            min-width: 40px;
         }
 
         .ep-body {
@@ -900,11 +926,14 @@
             }
 
             .episode-item {
-                grid-template-columns: 1fr;
-                gap: 0.6rem;
+                grid-template-columns: 40px 1fr auto;
+                gap: 0.8rem;
             }
 
-            .ep-num { order: -1; }
+            .ep-thumb {
+                width: 40px;
+                height: 56px;
+            }
 
             .ep-grades {
                 justify-content: flex-start;
@@ -1106,8 +1135,8 @@
         const recent = episodes.slice(1, 11);
 
         el.innerHTML = recent.map(ep => {
-            const detailParts = [ep.dateFormatted].filter(Boolean);
-            if (ep.subtitle) detailParts.push(`<span class="ep-summary">${ep.subtitle}</span>`);
+            const detailParts = [`Ep ${ep.number}`];
+            if (ep.dateFormatted) detailParts.push(ep.dateFormatted);
 
             const grades = [
                 hostBadge('Joshua', 'J', ep.jrGrade),
@@ -1116,8 +1145,12 @@
             ].filter(Boolean).join('');
 
             const epUrl = ep.spotifyUrl || SPOTIFY_URL;
+            const thumbContent = ep.thumbnailUrl
+                ? `<img src="${ep.thumbnailUrl}" alt="${ep.title}" loading="lazy">`
+                : `<span class="ep-thumb-fallback">Ep ${ep.number}</span>`;
+
             return `<a class="episode-item" href="${epUrl}" target="_blank">
-                <span class="ep-num">Ep ${ep.number}</span>
+                <div class="ep-thumb">${thumbContent}</div>
                 <div class="ep-body">
                     <div class="ep-title">${ep.title}</div>
                     <div class="ep-detail">${detailParts.join(' <span>&middot;</span> ')}</div>
